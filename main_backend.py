@@ -22,7 +22,7 @@ def create_database():
    if Path==False:
     with open('stocks.csv', 'x',  newline='') as file:
      writer = csv.writer(file)
-     writer.writerow(["tick", "volume"])
+     writer.writerow(["ticker", "volume","Date of Purchase","Average price"])
    else:
       return
 

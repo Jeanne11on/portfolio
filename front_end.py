@@ -2,7 +2,7 @@ import tkinter
 import tkinter.ttk
 import datetime
 import yfinance as yf
-
+import main_backend as mb
 
 # create classes
 class Investment(object):
@@ -60,20 +60,21 @@ def start_tab_widgets():
         todays_data = ticker.history(period='1d')
         return todays_data['Close'][0]
 
-    def print_userinput():
+    def generate_porfolio():
         #this function aggregates both the ticker and the number of shares, as of now it's printed, but wont be in the final result
         investment1=E1_tickers.get()+','+E1_nb_of_shares.get()+','+stamp
         investment2=E2_tickers.get()+','+E2_nb_of_shares.get()+','+stamp
         investment3=E3_tickers.get()+','+E3_nb_of_shares.get()+','+stamp
         investment4=E4_tickers.get()+','+E4_nb_of_shares.get()+','+stamp
         investment5=E5_tickers.get()+','+E5_nb_of_shares.get()+','+stamp
-        userinput=investment1+investment2+investment3+investment4+investment5
-        lbl_userinput = tkinter.ttk.Label(first_frame,text=userinput)
-        lbl_userinput.grid(column=1,row=98,pady=10, padx=10, sticky=(tkinter.W))
+        return(str(investment1+investment2+investment3+investment4+investment5))
+        mb.create_database()
+        #lbl_userinput = tkinter.ttk.Label(first_frame,text=userinput) #dont forget to delete this
+        #lbl_userinput.grid(column=1,row=98,pady=10, padx=10, sticky=(tkinter.W)) #dont forget to delete this
 
 
     #we create a button to output user input
-    Btn_ticker_value=tkinter.ttk.Button(first_frame,text='Generate my portfolio',command=print_userinput)
+    Btn_ticker_value=tkinter.ttk.Button(first_frame,text='Generate my portfolio',command=generate_porfolio)
     Btn_ticker_value.grid(column=0,row=90,pady=10, padx=10, sticky=(tkinter.W))
 
     # Create the buttons to move frames and exit
@@ -90,6 +91,10 @@ def start_tab_widgets():
     Investment4=Investment(E4_tickers.get(),E4_nb_of_shares.get(),stamp,get_current_price(E4_tickers))
     Investment5=Investment(E5_tickers.get(),E5_nb_of_shares.get(),stamp,get_current_price(E5_tickers))
 '''
+def initialize_db():
+    mb.create_database()
+
+
 def portfolio_widgets():
     # Create the label for the frame
     second_window_label = tkinter.ttk.Label(second_frame, text='Portfolio')
