@@ -1,46 +1,95 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-#
-
-# Creates three "windows" that the user can navigate through using Back and Next - buttons.
-
 import tkinter
 import tkinter.ttk
+import datetime
+import yfinance as yf
 
-# we
+
+# create classes
+class Investment(object):
+    def __init__(self,ticker,volume,Date_of_purchase,avg_price):
+        self.ticker = ticker
+        self.volume = volume
+        self.Date_of_purchase = Date_of_purchase
+        self.avg_price = avg_price
+
+# we populate the start tab
 def start_tab_widgets():
     # Create the label for the frame
-    first_window_label = tkinter.ttk.Label(first_frame, text='You\'re a lucky guy/gal!')
+    first_window_label = tkinter.ttk.Label(first_frame, text='Welcome to your stock portfolio!')
     first_window_label.grid(column=0, row=0, pady=10, padx=10, sticky=(tkinter.W))
 
     # start_tab functionalities
     lbl_lucky = tkinter.ttk.Label(first_frame,
-                                  text='Today we offer you the opportunity to invest in the stock market')
-    lbl_lucky.grid(column=0, row=1,pady=10, padx=10, sticky=(tkinter.W))
-    E_tickers = tkinter.ttk.Entry(first_frame)
-    E_tickers.grid(column=0,row=3,pady=10, padx=10, sticky=(tkinter.W))
-    ticker_value=E_tickers.get()
+                                  text='Place your orders below, your portfolio will be generated after you fill in your orders, and click Generate my portfolio')
+    lbl_lucky.grid(column=0, row=1, padx=10, sticky=(tkinter.W))
     lbl_insert_stickers = tkinter.ttk.Label(first_frame,text='Insert tickers in this column')
     lbl_insert_stickers.grid(column=0,row=2,pady=10, padx=10, sticky=(tkinter.W))
     lbl_how_many_shares = tkinter.ttk.Label(first_frame,text='How many shares do you want?')
     lbl_how_many_shares.grid(column=1,row=2,pady=10, padx=10, sticky=(tkinter.W))
-    E_nb_of_shares = tkinter.ttk.Entry(first_frame)
-    E_nb_of_shares.grid(column=1,row=3,pady=10, padx=10, sticky=(tkinter.W))
+    lbl_market_value = tkinter.ttk.Label(first_frame,text='Current market value...')
+    lbl_market_value.grid(column=3,row=2,pady=10, padx=10, sticky=(tkinter.W))
+
+    E1_tickers = tkinter.ttk.Entry(first_frame)
+    E1_tickers.grid(column=0,row=10,pady=10, padx=10, sticky=(tkinter.W))
+    E2_tickers = tkinter.ttk.Entry(first_frame)
+    E2_tickers.grid(column=0, row=11, pady=10, padx=10, sticky=(tkinter.W))
+    E3_tickers = tkinter.ttk.Entry(first_frame)
+    E3_tickers.grid(column=0, row=12, pady=10, padx=10, sticky=(tkinter.W))
+    E4_tickers = tkinter.ttk.Entry(first_frame)
+    E4_tickers.grid(column=0, row=13, pady=10, padx=10, sticky=(tkinter.W))
+    E5_tickers = tkinter.ttk.Entry(first_frame)
+    E5_tickers.grid(column=0, row=14, pady=10, padx=10, sticky=(tkinter.W))
+
+    E1_nb_of_shares = tkinter.ttk.Entry(first_frame)
+    E1_nb_of_shares.grid(column=1,row=10,pady=10, padx=10, sticky=(tkinter.W))
+    E2_nb_of_shares = tkinter.ttk.Entry(first_frame)
+    E2_nb_of_shares.grid(column=1, row=11, pady=10, padx=10, sticky=(tkinter.W))
+    E3_nb_of_shares = tkinter.ttk.Entry(first_frame)
+    E3_nb_of_shares.grid(column=1, row=12, pady=10, padx=10, sticky=(tkinter.W))
+    E4_nb_of_shares = tkinter.ttk.Entry(first_frame)
+    E4_nb_of_shares.grid(column=1, row=13, pady=10, padx=10, sticky=(tkinter.W))
+    E5_nb_of_shares = tkinter.ttk.Entry(first_frame)
+    E5_nb_of_shares.grid(column=1, row=14, pady=10, padx=10, sticky=(tkinter.W))
+
+    #this records a time stamp when we print the user output
+    x = datetime.datetime.now()
+    stamp = x.strftime("%c")
+
+    def get_current_price(symbol):
+        ticker = yf.Ticker(symbol)
+        todays_data = ticker.history(period='1d')
+        return todays_data['Close'][0]
 
     def print_userinput():
         #this function aggregates both the ticker and the number of shares, as of now it's printed, but wont be in the final result
-        tickert=tkinter.Label(first_frame,text=(E_tickers.get()+'-'+E_nb_of_shares.get()))
-        tickert.grid(column=1,row=9,pady=10, padx=10, sticky=(tkinter.W))
+        investment1=E1_tickers.get()+','+E1_nb_of_shares.get()+','+stamp
+        investment2=E2_tickers.get()+','+E2_nb_of_shares.get()+','+stamp
+        investment3=E3_tickers.get()+','+E3_nb_of_shares.get()+','+stamp
+        investment4=E4_tickers.get()+','+E4_nb_of_shares.get()+','+stamp
+        investment5=E5_tickers.get()+','+E5_nb_of_shares.get()+','+stamp
+        userinput=investment1+investment2+investment3+investment4+investment5
+        lbl_userinput = tkinter.ttk.Label(first_frame,text=userinput)
+        lbl_userinput.grid(column=1,row=98,pady=10, padx=10, sticky=(tkinter.W))
 
-    Btn_ticker_value=tkinter.ttk.Button(first_frame,text='Print',command=print_userinput)
-    Btn_ticker_value.grid(column=0,row=9,pady=10, padx=10, sticky=(tkinter.W))
+
+    #we create a button to output user input
+    Btn_ticker_value=tkinter.ttk.Button(first_frame,text='Generate my portfolio',command=print_userinput)
+    Btn_ticker_value.grid(column=0,row=90,pady=10, padx=10, sticky=(tkinter.W))
 
     # Create the buttons to move frames and exit
     first_window_quit_button = tkinter.Button(first_frame, text = "Quit", command = quit_program)
-    first_window_quit_button.grid(column=0, row=10, pady=10, sticky=(tkinter.W))
+    first_window_quit_button.grid(column=0, row=100, padx=10,pady=10, sticky=(tkinter.W))
     first_window_next_button = tkinter.Button(first_frame, text = "Next", command = call_second_frame_on_top)
-    first_window_next_button.grid(column=1, row=10, pady=10, sticky=(tkinter.W))
+    first_window_next_button.grid(column=1, row=100, padx=10,pady=10, sticky=(tkinter.W))
 
+'''
+    #we initiate the five investments
+    Investment1=Investment(E1_tickers.get(),E1_nb_of_shares.get(),stamp,get_current_price(E1_tickers))
+    Investment2=Investment(E2_tickers.get(),E2_nb_of_shares.get(),stamp,get_current_price(E2_tickers))
+    Investment3=Investment(E3_tickers.get(),E3_nb_of_shares.get(),stamp,get_current_price(E3_tickers))
+    Investment4=Investment(E4_tickers.get(),E4_nb_of_shares.get(),stamp,get_current_price(E4_tickers))
+    Investment5=Investment(E5_tickers.get(),E5_nb_of_shares.get(),stamp,get_current_price(E5_tickers))
+'''
 def portfolio_widgets():
     # Create the label for the frame
     second_window_label = tkinter.ttk.Label(second_frame, text='Portfolio')
@@ -120,16 +169,14 @@ def call_third_frame_on_top():
 def quit_program():
     root_window.destroy()
 
-###############################
-# Main program starts here :) #
-###############################
+# we run the main program now
 
 # Create the root GUI window.
 root_window = tkinter.Tk()
 root_window.title('Stock portfolio')
 
 # Define window size
-window_width = 200
+window_width = 300
 window_heigth = 100
 
 # Create frames inside the root window to hold other GUI elements. All frames must be created in the main program, otherwise they are not accessible in functions.

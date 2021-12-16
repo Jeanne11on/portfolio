@@ -6,7 +6,7 @@ import os
 import mplfinance as mpf
 
 
-#the function show wether the csv file given as argument is empty or not (true = empty, false = not empty)
+#the function show whether the csv file given as argument is empty or not (true = empty, false = not empty)
 def is_empty_csv(file):
     with open(file) as csvfile:
         reader = csv.reader(csvfile)
@@ -28,7 +28,7 @@ def create_database():
 
 #this function allows the user to add new stocks to the database and add or remove a certain 
 #amount of volume of a stock
-#the csv library does not have a specific function which so we used a the function of panda library in order to
+#the csv library does not have a specific function which does so, so we used a function of the panda library in order to
 #read the csv file and rewrite it with the new modifications using csv library. Without using this method the most common
 #way to resolve this issue is creating another excel file where temporarly copying the old file but we find this
 #solutions too complicated.
@@ -130,3 +130,10 @@ def recommendations_stock(stock):
        return "sell the stock"
     else:
        return "recommendations are not clear go into a deeper analysis to decide what to do"
+
+create_database()
+
+update_data('AMZN',3)
+
+data = currentstocksdata()
+print(data)
