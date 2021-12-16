@@ -167,7 +167,7 @@ def call_second_frame_on_top():
 
 def call_third_frame_on_top():
     # This function can only be called from the second window.
-    # Hide the second window and show the third window.
+    # Hide the second window and show the third window.#
     second_frame.grid_forget()
     third_frame.grid(column=0, row=0, padx=20, pady=5, sticky=(tkinter.W, tkinter.N, tkinter.E))
 
@@ -175,6 +175,9 @@ def quit_program():
     root_window.destroy()
 
 # we run the main program now
+
+#we initialize the database
+initialize_db()
 
 # Create the root GUI window.
 root_window = tkinter.Tk()

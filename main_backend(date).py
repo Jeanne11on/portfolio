@@ -131,5 +131,5 @@ def recommendations_stock(stock):
     else:
        return "recommendations are not clear go into a deeper analysis to decide what to do"
 
-create_database()
-update_data("AMZN", "100", "01/02/2019")
+#create_database()
+#update_data("AMZN", "100", "01/02/2019")

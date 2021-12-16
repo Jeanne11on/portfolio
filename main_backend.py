@@ -32,8 +32,8 @@ def create_database():
 #read the csv file and rewrite it with the new modifications using csv library. Without using this method the most common
 #way to resolve this issue is creating another excel file where temporarly copying the old file but we find this
 #solutions too complicated.
-def update_data(tick, volume):
-   data = pd.read_csv("stocks.csv", names = ('tick', 'volume'))
+def update_data(tick, volume, purchase_date, avgprice):
+   data = pd.read_csv("stocks.csv", names = ('tick', 'volume','Date of Purchase', 'Average price'))
    nrows = 0
    for index, row in data.iterrows():
        nrows+=1
@@ -46,9 +46,9 @@ def update_data(tick, volume):
        i+=1
      elif row.tick == tick:
        newvolume = int(volume) + int(row.volume)
-       writer.writerow([tick, newvolume])
+       writer.writerow([tick, newvolume, purchase_date, avgprice])
     if i == nrows:
-        writer.writerow([tick, volume])
+        writer.writerow([tick, volume, purchase_date, avgprice])
 
 #this function allows to delete stocks from the portfolio 
 def delete_data(tick):
@@ -131,9 +131,7 @@ def recommendations_stock(stock):
     else:
        return "recommendations are not clear go into a deeper analysis to decide what to do"
 
-create_database()
-
-update_data('AMZN',3)
-
-data = currentstocksdata()
-print(data)
+#create_database()
+#update_data('AMZN',3, "03/12/2018", 125)
+#data = currentstocksdata()
+#print(data)
