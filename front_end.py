@@ -174,7 +174,6 @@ def reco_widgets():
     third_window_quit_button = tkinter.Button(third_frame, text = "Quit", command = quit_program)
     third_window_quit_button.grid(column=1, row=50, pady=10, sticky=(tkinter.N))
     #plot_button = tkinter.Button(third_frame, text = "Plot")
-    #plot_button.grid(column=1, row=0, pady=10, sticky=(tkinter.N))
 
 
 def call_first_frame_on_top():

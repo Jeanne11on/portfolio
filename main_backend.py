@@ -134,15 +134,3 @@ def recommendations_stock(stock):
        return "sell the stock"
     else:
        return "recommendations are not clear go into a deeper analysis to decide what to do"
-
-#create_database()
-#update_data('AMZN',3, "03/12/2018", 125)
-#update_data('HSBC',5, "03/12/2018", 300)
-#data = currentstocksdata()
-#print(data)
-'''data = pd.read_csv("stocks.csv")
-i = 0
-for data.ticker[i] in data.ticker:
- rec = recommendations_stock(data.ticker[i])
- print (rec)
- i+=1'''
