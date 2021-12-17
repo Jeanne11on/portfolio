@@ -165,7 +165,6 @@ def reco_widgets():
         tree.insert('', 'end', text="1", values=(data.ticker[i], mb.recommendations_stock(data.ticker[i])))
         i =+1
     tree.grid()
-
     # Create the button for the frame
     third_window_back_button = tkinter.Button(third_frame, text = "Back", command = call_second_frame_on_top)
     third_window_back_button.grid(column=1, row=2, pady=10, sticky=(tkinter.N))
@@ -173,6 +172,7 @@ def reco_widgets():
     third_window_quit_button.grid(column=1, row=1, pady=10, sticky=(tkinter.N))
     #plot_button = tkinter.Button(third_frame, text = "Plot")
     #plot_button.grid(column=1, row=0, pady=10, sticky=(tkinter.N))
+
     
 def call_first_frame_on_top():
     # This function can be called only from the second window.

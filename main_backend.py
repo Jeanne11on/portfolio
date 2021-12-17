@@ -116,7 +116,7 @@ def get_current_price(symbol):
 #only the Sell or Buy advices, counts them and verifies if there are more Buy advices than Sell and viceversa.
 #If the result is uncertain it gives back the string "recommendations are not clear go into a deeper analysis to decide what to do"
 def recommendations_stock(stock):
-    stockdata = yf.ticker(stock)
+    stockdata = yf.Ticker(stock)
     stockrec = stockdata.recommendations
     data = pd.DataFrame(stockrec)
     data.columns = ['firm', 'tograde', 'fromgrade', 'action']
