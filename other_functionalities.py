@@ -2,6 +2,7 @@ from matplotlib import pyplot as plt
 import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import pandas as pd
 
 def pie_chart():
     data = pd.read_csv("stocks.csv")
@@ -24,4 +25,14 @@ def pie_chart():
     plt.legend(pie[0], labels, loc="upper right")
     canvas = FigureCanvasTkAgg(actualFigure)
     canvas.get_tk_widget().grid(second_frame,column=1, row=10, padx=20, pady=5, sticky=(tkinter.N))
-    #canvas.show()
+
+
+def show_total_shares():
+ data = pd.read_csv("stocks.csv", names = ('ticker', 'volume','Date of Purchase', 'Average price'))
+ volume=0
+ i=0
+ for data.ticker[i] in data.ticker:
+     volume=volume+(data.volume[i])
+     i+=1
+ lbl_Portfolio = tkinter.Label(second_frame, text=ntick-1, bg='grey')
+ lbl_Portfolio.grid(row=1, column=1, sticky='w', pady=2)

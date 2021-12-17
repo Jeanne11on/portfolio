@@ -7,11 +7,12 @@ import main_backend as mb
 from tkinter import *
 from tkinter import ttk
 import pandas as pd
+import other_functionalities as of
+import csv
 from matplotlib import pyplot as plt
 import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import csv
 
 # create classes
 class Investment(object):
@@ -28,6 +29,17 @@ def GetCurrentValue(ticker):
 
 def initialize_db():
     mb.create_database()
+
+def show_total_value():
+ data = pd.read_csv("stocks.csv")
+ i = 0
+ tot = 0
+ for data.ticker[i] in data.ticker:
+  current_price = mb.get_current_price(data.ticker[i])
+  tot = tot + (data.volume[i]*current_price)
+  i+=1
+ lbl_Portfolio = tkinter.Label(second_frame, text=round(tot, 2), bg='grey')
+ lbl_Portfolio.grid(row=1, column=4, sticky='w', pady=2)
 
 # we populate the start tab
 def start_tab_widgets():
@@ -106,6 +118,7 @@ def start_tab_widgets():
                 price = row['Average price']
                 tv_data.insert("", 1, values=(ticker, volume, Date, price))
 
+
     #we create a button to output user input
     Btn_ticker_value=tkinter.ttk.Button(first_frame,text='Generate my portfolio',command=generate_porfolio)
     Btn_ticker_value.grid(column=0,row=90,pady=10, padx=10, sticky=(tkinter.W))
@@ -116,14 +129,6 @@ def start_tab_widgets():
     first_window_next_button = tkinter.Button(first_frame, text = "Next", command = call_second_frame_on_top)
     first_window_next_button.grid(column=1, row=100, padx=10,pady=10, sticky=(tkinter.W))
 
-'''
-    #we initiate the five investments
-    Investment1=Investment(E1_tickers.get(),E1_nb_of_shares.get(),stamp,get_current_price(E1_tickers))
-    Investment2=Investment(E2_tickers.get(),E2_nb_of_shares.get(),stamp,get_current_price(E2_tickers))
-    Investment3=Investment(E3_tickers.get(),E3_nb_of_shares.get(),stamp,get_current_price(E3_tickers))
-    Investment4=Investment(E4_tickers.get(),E4_nb_of_shares.get(),stamp,get_current_price(E4_tickers))
-    Investment5=Investment(E5_tickers.get(),E5_nb_of_shares.get(),stamp,get_current_price(E5_tickers))
-'''
 def portfolio_widgets():
     # Create the label for the frame
     second_window_label = tkinter.ttk.Label(second_frame, text='Portfolio')
@@ -131,49 +136,23 @@ def portfolio_widgets():
 
     # Create the button for the frame
     second_window_back_button = tkinter.Button(second_frame, text = "Back", command = call_first_frame_on_top)
-    second_window_back_button.grid(column=0, row=10, pady=10, sticky=(tkinter.W))
+    second_window_back_button.grid(column=0, row=100, pady=10, sticky=(tkinter.W))
     second_window_next_button = tkinter.Button(second_frame, text = "Next", command = call_third_frame_on_top)
-    second_window_next_button.grid(column=1, row=10, pady=10, sticky=(tkinter.W))
-    total_share_button = tkinter.Button(second_frame,text='Show me how many shares I own',command=mb.show_total_shares)
-    total_share_button.grid(column=0, row=1, pady=10, sticky=(tkinter.W))
+    second_window_next_button.grid(column=2, row=100, pady=10, sticky=(tkinter.W))
+    second_window_quit_button = tkinter.Button(first_frame, text = "Quit", command=quit_program)
+    second_window_quit_button.grid(column=1, row=100, padx=10,pady=10, sticky=(tkinter.W))
 
     #insert porfolio functionalities here
-    #first we populate with the portfolio
-    lbl_Portfolio = tkinter.Label(second_frame, text="Portfolio", bg='orange')
-    lbl_Portfolio.grid(row=5, column=0, sticky='w', pady=2)
-    lbl_Last = tkinter.Label(second_frame, text="Last", bg='orange')
-    lbl_Last.grid(row=5, column=1, sticky='w', pady=2)
-    lbl_Change = tkinter.Label(second_frame, text="Change", bg='orange')
-    lbl_Change.grid(row=5, column=2, sticky='w', pady=2)
-    lbl_Unrealised = tkinter.Label(second_frame, text="Unrealised Gain/Loss", bg='orange')
-    lbl_Unrealised.grid(row=5, column=3, sticky='w', pady=2)
-    lbl_Total_Return = tkinter.Label(second_frame, text="Total Return", bg='orange')
-    lbl_Total_Return.grid(row=5, column=4, sticky='w', pady=2)
-    lbl_name_portfolio = tkinter.Label(second_frame, text="Needs work", bg='orange')
-    lbl_name_portfolio.grid(row=6, column=0, sticky='w', pady=2)
-    lbl_Last_inEUR = tkinter.Label(second_frame, text="Needs work", bg='orange')
-    lbl_Last_inEUR.grid(row=6, column=1, sticky='w', pady=2)
-    lbl_Change_inper = tkinter.Label(second_frame, text="Needs work", bg='orange')
-    lbl_Change_inper.grid(row=6, column=2, sticky='w', pady=2)
-    lbl_Unrealized_inEUR = tkinter.Label(second_frame, text="Needs work", bg='orange')
-    lbl_Unrealized_inEUR.grid(row=6, column=3, sticky='w', pady=2)
-    lbl_Total_ReturninEUR = tkinter.Label(second_frame, text=mb.get_current_price("AMZN"), bg='orange')
-    lbl_Total_ReturninEUR.grid(row=6, column=4, sticky='w', pady=2)
+    total_value_button = tkinter.Button(second_frame, text='Calculate the total value of my portfolio',
+                                        command=show_total_value)
+    total_value_button.grid(column=0, row=1, pady=10, sticky=(tkinter.W),columnspan=2)
 
-    # we populate the Portfolio movers section of the second frame
-    lbl_Port_movers_title = tkinter.Label(second_frame, text="Portfolio Movers", bg='green')
-    btn1 = tkinter.Button(second_frame, text='I want to see my gainers', bd='5', command=())
-    btn2 = tkinter.Button(second_frame, text='I want to see my losers', bd='5', command=())
-
-    # We grid the Portfolio movers part
-    lbl_Port_movers_title.grid(row=7, column=0, sticky='w', pady=2)
-    btn1.grid(row=8, column=0)
-    btn2.grid(row=8, column=1)
+    pie_chart()
 
 def reco_widgets():
     # Create the label for the frame
     third_window_label = tkinter.ttk.Label(third_frame, text='Recommendation tab')
-    third_window_label.grid(column=0, row=0, pady=10, padx=10, sticky=(tkinter.N))
+    third_window_label.grid(column=0, row=0, pady=10, padx=10, sticky=(tkinter.W))
 
     tree = ttk.Treeview(third_frame, column=("Ticker", "Recommendation"), show='headings', height=5)
     tree.column("# 1", anchor=CENTER)
@@ -191,9 +170,9 @@ def reco_widgets():
 
     # Create the button for the frame
     third_window_back_button = tkinter.Button(third_frame, text = "Back", command = call_second_frame_on_top)
-    third_window_back_button.grid(column=1, row=2, pady=10, sticky=(tkinter.N))
+    third_window_back_button.grid(column=0, row=50, pady=10, sticky=(tkinter.N))
     third_window_quit_button = tkinter.Button(third_frame, text = "Quit", command = quit_program)
-    third_window_quit_button.grid(column=1, row=1, pady=10, sticky=(tkinter.N))
+    third_window_quit_button.grid(column=1, row=50, pady=10, sticky=(tkinter.N))
     #plot_button = tkinter.Button(third_frame, text = "Plot")
     #plot_button.grid(column=1, row=0, pady=10, sticky=(tkinter.N))
 
@@ -227,7 +206,7 @@ def pie_chart():
         values.append(data.volume[i])
         i =+1
     # now to get the total number of failed in each section
-    actualFigure = plt.figure(figsize = (10,10))
+    actualFigure = plt.figure(figsize = (5,5))
     actualFigure.suptitle("Stocks Pie Chart", fontsize = 22)
     #explode=(0, 0.05, 0, 0)
     # as explode needs to contain numerical values for each "slice" of the pie chart (i.e. every group needs to have an associated explode value)
@@ -236,8 +215,8 @@ def pie_chart():
         explode.append(0.1)
     pie = plt.pie(values, labels=labels, explode=explode, shadow=True, autopct='%1.1f%%')
     plt.legend(pie[0], labels, loc="upper right")
-    canvas = FigureCanvasTkAgg(actualFigure, master = second_frame)
-    canvas.get_tk_widget().grid(column=0, row=0, padx=20, pady=5, sticky=(tkinter.W, tkinter.N, tkinter.E))
+    canvas = FigureCanvasTkAgg(actualFigure,master=second_frame)
+    canvas.get_tk_widget().grid(column=1, row=10, padx=20, pady=5, sticky=(tkinter.N))
     #canvas.show()
 
 def quit_program():

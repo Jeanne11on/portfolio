@@ -25,10 +25,6 @@ def create_database():
    else:
       return
 
-def show_total_shares():
-    pass
-
-
 #this function allows the user to add new stocks to the database and add or remove a certain 
 #amount of volume of a stock
 #the csv library does not have a specific function which does so, so we used a function of the panda library in order to
