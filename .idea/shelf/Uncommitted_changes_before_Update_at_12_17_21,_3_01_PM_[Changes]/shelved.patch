@@ -1,0 +1,35 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"550f7615-5697-47fa-9275-882a5ba53eba\" name=\"Changes\" comment=\"renamed combine.py to front_end.py, added some rows for input\" />\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Python Script\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GitSEFilterConfiguration\">\n    <file-type-list>\n      <filtered-out-file-type name=\"LOCAL_BRANCH\" />\n      <filtered-out-file-type name=\"REMOTE_BRANCH\" />\n      <filtered-out-file-type name=\"TAG\" />\n      <filtered-out-file-type name=\"COMMIT_BY_MESSAGE\" />\n    </file-type-list>\n  </component>\n  <component name=\"ProjectId\" id=\"21bbp6ygH888Q4EsscetdPxhoEF\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"ASKED_ADD_EXTERNAL_FILES\" value=\"true\" />\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\n    <property name=\"node.js.detected.package.eslint\" value=\"true\" />\n    <property name=\"node.js.selected.package.eslint\" value=\"(autodetect)\" />\n    <property name=\"settings.editor.selected.configurable\" value=\"com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable\" />\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"550f7615-5697-47fa-9275-882a5ba53eba\" name=\"Changes\" comment=\"\" />\n      <created>1638212913853</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1638212913853</updated>\n      <workItem from=\"1638212917889\" duration=\"12904000\" />\n      <workItem from=\"1638610976081\" duration=\"5034000\" />\n      <workItem from=\"1638616773271\" duration=\"250000\" />\n      <workItem from=\"1638649996386\" duration=\"1394000\" />\n      <workItem from=\"1638821290354\" duration=\"16000\" />\n      <workItem from=\"1639658958728\" duration=\"16565000\" />\n      <workItem from=\"1639681076677\" duration=\"996000\" />\n      <workItem from=\"1639682320292\" duration=\"14805000\" />\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"renamed combine.py to front_end.py, added some rows for input\">\n      <created>1639677239820</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1639677239821</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"renamed combine.py to front_end.py, added some rows for input\">\n      <created>1639679227777</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1639679227777</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"3\" />\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\n    <MESSAGE value=\"renamed combine.py to front_end.py, added some rows for input\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"renamed combine.py to front_end.py, added some rows for input\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 00bec8213395af831118104bc357596fad620534)
++++ b/.idea/workspace.xml	(date 1639749615434)
+@@ -1,7 +1,9 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="550f7615-5697-47fa-9275-882a5ba53eba" name="Changes" comment="renamed combine.py to front_end.py, added some rows for input" />
++    <list default="true" id="550f7615-5697-47fa-9275-882a5ba53eba" name="Changes" comment="renamed combine.py to front_end.py, added some rows for input">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -55,7 +57,12 @@
+       <workItem from="1638821290354" duration="16000" />
+       <workItem from="1639658958728" duration="16565000" />
+       <workItem from="1639681076677" duration="996000" />
+-      <workItem from="1639682320292" duration="14805000" />
++      <workItem from="1639682320292" duration="14994000" />
++      <workItem from="1639742548247" duration="305000" />
++      <workItem from="1639743514622" duration="308000" />
++      <workItem from="1639743895189" duration="1306000" />
++      <workItem from="1639749468849" duration="68000" />
++      <workItem from="1639749541172" duration="75000" />
+     </task>
+     <task id="LOCAL-00001" summary="renamed combine.py to front_end.py, added some rows for input">
+       <created>1639677239820</created>
