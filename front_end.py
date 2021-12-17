@@ -1,8 +1,16 @@
+#from _typeshed import Self
 import tkinter
 import tkinter.ttk
 import datetime
 import yfinance as yf
 import main_backend as mb
+from tkinter import *
+from tkinter import ttk
+import pandas as pd
+from matplotlib import pyplot as plt
+import matplotlib  
+matplotlib.use("TkAgg")
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 # create classes
 class Investment(object):
@@ -94,7 +102,6 @@ def start_tab_widgets():
 def initialize_db():
     mb.create_database()
 
-
 def portfolio_widgets():
     # Create the label for the frame
     second_window_label = tkinter.ttk.Label(second_frame, text='Portfolio')
@@ -105,7 +112,7 @@ def portfolio_widgets():
     second_window_back_button.grid(column=0, row=10, pady=10, sticky=(tkinter.W))
     second_window_next_button = tkinter.Button(second_frame, text = "Next", command = call_third_frame_on_top)
     second_window_next_button.grid(column=1, row=10, pady=10, sticky=(tkinter.W))
-
+    
     #insert porfolio functionalities here
     #first we populate with the portfolio
     lbl_Portfolios_title = tkinter.Label(second_frame, text="Portfolios", bg='orange')
@@ -128,7 +135,7 @@ def portfolio_widgets():
     lbl_Change_inper.grid(row=6, column=2, sticky='w', pady=2)
     lbl_Unrealized_inEUR = tkinter.Label(second_frame, text="Needs work", bg='orange')
     lbl_Unrealized_inEUR.grid(row=6, column=3, sticky='w', pady=2)
-    lbl_Total_ReturninEUR = tkinter.Label(second_frame, text="Needs work", bg='orange')
+    lbl_Total_ReturninEUR = tkinter.Label(second_frame, text=mb.get_current_price("AMZN"), bg='orange')
     lbl_Total_ReturninEUR.grid(row=6, column=4, sticky='w', pady=2)
 
     # we populate the Portfolio movers section of the second frame
@@ -145,13 +152,28 @@ def reco_widgets():
     # Create the label for the frame
     third_window_label = tkinter.ttk.Label(third_frame, text='Recommendation tab')
     third_window_label.grid(column=0, row=0, pady=10, padx=10, sticky=(tkinter.N))
+    tree = ttk.Treeview(third_frame, column=("Ticker", "Recommendation"), show='headings', height=5)
+    tree.column("# 1", anchor=CENTER)
+    tree.heading("# 1", text="Ticker")
+    tree.column("# 2", anchor=CENTER)
+    tree.heading("# 2", text="Recommendation")
+
+    # Insert the data in Treeview widget
+    data = pd.read_csv("stocks.csv")
+    i = 0
+    for data.ticker[i] in data.ticker:
+        tree.insert('', 'end', text="1", values=(data.ticker[i], mb.recommendations_stock(data.ticker[i])))
+        i =+1
+    tree.grid()
 
     # Create the button for the frame
     third_window_back_button = tkinter.Button(third_frame, text = "Back", command = call_second_frame_on_top)
-    third_window_back_button.grid(column=0, row=1, pady=10, sticky=(tkinter.N))
+    third_window_back_button.grid(column=1, row=2, pady=10, sticky=(tkinter.N))
     third_window_quit_button = tkinter.Button(third_frame, text = "Quit", command = quit_program)
     third_window_quit_button.grid(column=1, row=1, pady=10, sticky=(tkinter.N))
-
+    #plot_button = tkinter.Button(third_frame, text = "Plot")
+    #plot_button.grid(column=1, row=0, pady=10, sticky=(tkinter.N))
+    
 def call_first_frame_on_top():
     # This function can be called only from the second window.
     # Hide the second window and show the first window.
@@ -170,6 +192,29 @@ def call_third_frame_on_top():
     # Hide the second window and show the third window.#
     second_frame.grid_forget()
     third_frame.grid(column=0, row=0, padx=20, pady=5, sticky=(tkinter.W, tkinter.N, tkinter.E))
+
+def pie_chart():
+    data = pd.read_csv("stocks.csv")
+    i = 0
+    labels = []
+    values = []
+    for data.ticker[i] in data.ticker:
+        labels.append(data.ticker[i])
+        values.append(data.volume[i])
+        i =+1
+    # now to get the total number of failed in each section
+    actualFigure = plt.figure(figsize = (10,10))
+    actualFigure.suptitle("Stocks Pie Chart", fontsize = 22)
+    #explode=(0, 0.05, 0, 0)
+    # as explode needs to contain numerical values for each "slice" of the pie chart (i.e. every group needs to have an associated explode value)
+    explode = list()
+    for k in labels:
+        explode.append(0.1)
+    pie = plt.pie(values, labels=labels, explode=explode, shadow=True, autopct='%1.1f%%')
+    plt.legend(pie[0], labels, loc="upper right")
+    canvas = FigureCanvasTkAgg(actualFigure, master = second_frame)
+    canvas.get_tk_widget().grid()
+    #canvas.show()
 
 def quit_program():
     root_window.destroy()
@@ -208,6 +253,8 @@ start_tab_widgets()
 # Hide all frames in reverse order, but leave first frame visible (unhidden).
 third_frame.grid_forget()
 second_frame.grid_forget()
+
+pie_chart()
 
 # Start tkinter event - loop
 root_window.mainloop()

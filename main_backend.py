@@ -105,6 +105,11 @@ def info_stock(stock):
     finaldata.informations['sector'] = sector
     finaldata.informations['business_summary'] = business_summary
     return finaldata
+   
+def get_current_price(symbol):
+        ticker = yf.Ticker(symbol)
+        todays_data = ticker.history(period='1d')
+        return todays_data['Close'][0]
 
 #this function suggests the user to buy or to sell a stock retreiving informations trhough recommendation method
 #of yfinance library. This method gives a list of advices from important financial institutions. the function takes into account
@@ -120,9 +125,9 @@ def recommendations_stock(stock):
     sell = 0
     for data.firm[i] in data.firm:
        if data.tograde[i]  == "Buy":
-          buy+=1
+          buy +=1
        if data.tograde[i] == "Sell":
-          sell+=1
+          sell +=1
        i+=1
     if buy > sell + 4:
        return "buy the stock"
@@ -133,5 +138,12 @@ def recommendations_stock(stock):
 
 #create_database()
 #update_data('AMZN',3, "03/12/2018", 125)
+#update_data('HSBC',5, "03/12/2018", 300)
 #data = currentstocksdata()
 #print(data)
+'''data = pd.read_csv("stocks.csv")
+i = 0
+for data.ticker[i] in data.ticker:
+ rec = recommendations_stock(data.ticker[i])
+ print (rec)
+ i+=1'''
