@@ -3,6 +3,10 @@ import tkinter.ttk
 import datetime
 import yfinance as yf
 import main_backend as mb
+import pandas as pd
+import numpy as np
+import csv as csv
+
 
 # create classes
 class Investment(object):
@@ -11,6 +15,43 @@ class Investment(object):
         self.volume = volume
         self.Date_of_purchase = Date_of_purchase
         self.avg_price = avg_price
+
+def GetCurrentValue(ticker):
+    ticker_yahoo = yf.Ticker(ticker)
+    data = ticker_yahoo.history()
+    return(data.tail(1)['Close'].iloc[0])
+
+'''
+def file_open():
+    try:
+        df = pd.read_excel(stocks.csv)
+    except FileNotFoundError:
+        my_label.config(text="error, we couldn't find the file!")
+
+    #this clears out past data
+    clear_tree()
+
+    #show new tree view
+    my_tree['column']=list(df.columns)
+    my_tree['show']='headings'
+
+    #loop
+    for column in my_tree['column']:
+        my_tree.heading(column,text=column)
+
+    #display data
+    df_rows = df.to_numpy().tolist()
+    for row in df_rows:
+        my_tree.insert('','end',values=row)
+
+    my_tree.grid(row=25,column=0)
+
+
+def clear_tree():
+    my_tree.delete(*my_tree.get_childen())
+'''
+def initialize_db():
+    mb.create_database()
 
 # we populate the start tab
 def start_tab_widgets():
@@ -26,8 +67,7 @@ def start_tab_widgets():
     lbl_insert_stickers.grid(column=0,row=2,pady=10, padx=10, sticky=(tkinter.W))
     lbl_how_many_shares = tkinter.ttk.Label(first_frame,text='How many shares do you want?')
     lbl_how_many_shares.grid(column=1,row=2,pady=10, padx=10, sticky=(tkinter.W))
-    lbl_market_value = tkinter.ttk.Label(first_frame,text='Current market value...')
-    lbl_market_value.grid(column=3,row=2,pady=10, padx=10, sticky=(tkinter.W))
+
 
     E1_tickers = tkinter.ttk.Entry(first_frame)
     E1_tickers.grid(column=0,row=10,pady=10, padx=10, sticky=(tkinter.W))
@@ -62,16 +102,36 @@ def start_tab_widgets():
 
     def generate_porfolio():
         #this function aggregates both the ticker and the number of shares, as of now it's printed, but wont be in the final result
-        investment1=E1_tickers.get()+','+E1_nb_of_shares.get()+','+stamp
-        investment2=E2_tickers.get()+','+E2_nb_of_shares.get()+','+stamp
-        investment3=E3_tickers.get()+','+E3_nb_of_shares.get()+','+stamp
-        investment4=E4_tickers.get()+','+E4_nb_of_shares.get()+','+stamp
-        investment5=E5_tickers.get()+','+E5_nb_of_shares.get()+','+stamp
-        return(str(investment1+investment2+investment3+investment4+investment5))
-        mb.create_database()
-        #lbl_userinput = tkinter.ttk.Label(first_frame,text=userinput) #dont forget to delete this
-        #lbl_userinput.grid(column=1,row=98,pady=10, padx=10, sticky=(tkinter.W)) #dont forget to delete this
+        investment1=list(E1_tickers.get()+','+E1_nb_of_shares.get()+','+stamp+str(GetCurrentValue(ticker=E1_tickers.get())))
+        investment2=list(E2_tickers.get()+','+E2_nb_of_shares.get()+','+stamp+str(GetCurrentValue(ticker=E2_tickers.get())))
+        investment3=list(E3_tickers.get()+','+E3_nb_of_shares.get()+','+stamp+str(GetCurrentValue(ticker=E3_tickers.get())))
+        investment4=list(E4_tickers.get()+','+E4_nb_of_shares.get()+','+stamp+str(GetCurrentValue(ticker=E4_tickers.get())))
+        investment5=list(E5_tickers.get()+','+E5_nb_of_shares.get()+','+stamp+str(GetCurrentValue(ticker=E5_tickers.get())))
+        #return(str(investment1+investment2+investment3+investment4+investment5))' leave it here for now
+        initialize_db()
+        mb.update_data(E1_tickers.get(),E1_nb_of_shares.get(),stamp,GetCurrentValue(ticker=E1_tickers.get()))
+        mb.update_data(E2_tickers.get(),E2_nb_of_shares.get(),stamp,GetCurrentValue(ticker=E2_tickers.get()))
+        mb.update_data(E3_tickers.get(),E3_nb_of_shares.get(),stamp,GetCurrentValue(ticker=E3_tickers.get()))
+        mb.update_data(E4_tickers.get(),E4_nb_of_shares.get(),stamp,GetCurrentValue(ticker=E4_tickers.get()))
+        mb.update_data(E5_tickers.get(),E5_nb_of_shares.get(),stamp,GetCurrentValue(ticker=E5_tickers.get()))
 
+        #Now that the data is in excel, we load it into the front page
+        tv_data = tkinter.ttk.Treeview(first_frame,columns=('ticker', 'volume','Date of Purchase', 'Average price'))
+
+        tv_data.heading('ticker',text='ticker')
+        tv_data.heading('volume', text='volume')
+        tv_data.heading('Date of Purchase', text='Date of Purchase')
+        tv_data.heading('Average price', text='Average price')
+        tv_data.grid(row=20,column=0,pady=10, padx=10, sticky=(tkinter.W))
+
+        with open('stocks.csv') as f:
+                reader = csv.DictReader(f,delimiter=',')
+                for row in reader:
+                    ticker=row['ticker']
+                    volume=row['volume']
+                    Date=row['Date of Purchase']
+                    price=row['Average price']
+                    tv_data.insert("",1,values=(ticker,volume,Date,price))
 
     #we create a button to output user input
     Btn_ticker_value=tkinter.ttk.Button(first_frame,text='Generate my portfolio',command=generate_porfolio)
@@ -91,8 +151,6 @@ def start_tab_widgets():
     Investment4=Investment(E4_tickers.get(),E4_nb_of_shares.get(),stamp,get_current_price(E4_tickers))
     Investment5=Investment(E5_tickers.get(),E5_nb_of_shares.get(),stamp,get_current_price(E5_tickers))
 '''
-def initialize_db():
-    mb.create_database()
 
 
 def portfolio_widgets():
@@ -146,6 +204,20 @@ def reco_widgets():
     third_window_label = tkinter.ttk.Label(third_frame, text='Recommendation tab')
     third_window_label.grid(column=0, row=0, pady=10, padx=10, sticky=(tkinter.N))
 
+    # Create a dropdown to get more info on some stocks
+    with open('stocks.csv') as f:
+        reader = csv.DictReader(f, delimiter=',')
+        for row in reader:
+            ticker = row['ticker']
+            volume = row['volume']
+            Date = row['Date of Purchase']
+            price = row['Average price']
+            tv_data.insert("", 1, values=(ticker, volume, Date, price))
+
+    # Output the recommendations
+    btn_recommendations=tkinter.ttk.Button(third_frame,text="What do institutional actors say about this stock?",command=reco)
+    btn_recommendations.grid(column=0,row=1, pady=10, sticky=(tkinter.N))
+
     # Create the button for the frame
     third_window_back_button = tkinter.Button(third_frame, text = "Back", command = call_second_frame_on_top)
     third_window_back_button.grid(column=0, row=1, pady=10, sticky=(tkinter.N))
@@ -176,16 +248,14 @@ def quit_program():
 
 # we run the main program now
 
-#we initialize the database
-initialize_db()
-
 # Create the root GUI window.
 root_window = tkinter.Tk()
 root_window.title('Stock portfolio')
+root_window.geometry('1000x800')
 
 # Define window size
-window_width = 300
-window_heigth = 100
+window_width = 1000
+window_heigth = 1000
 
 # Create frames inside the root window to hold other GUI elements. All frames must be created in the main program, otherwise they are not accessible in functions.
 first_frame=tkinter.ttk.Frame(root_window, width=window_width, height=window_heigth)
