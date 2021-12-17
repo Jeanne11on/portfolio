@@ -134,11 +134,11 @@ def portfolio_widgets():
     second_window_back_button.grid(column=0, row=10, pady=10, sticky=(tkinter.W))
     second_window_next_button = tkinter.Button(second_frame, text = "Next", command = call_third_frame_on_top)
     second_window_next_button.grid(column=1, row=10, pady=10, sticky=(tkinter.W))
+    total_share_button = tkinter.Button(second_frame,text='Show me how many shares I own',command=mb.show_total_shares)
+    total_share_button.grid(column=0, row=1, pady=10, sticky=(tkinter.W))
 
     #insert porfolio functionalities here
     #first we populate with the portfolio
-    lbl_Portfolios_title = tkinter.Label(second_frame, text="Portfolios", bg='orange')
-    lbl_Portfolios_title.grid(row=4, column=0, sticky='w', pady=2)
     lbl_Portfolio = tkinter.Label(second_frame, text="Portfolio", bg='orange')
     lbl_Portfolio.grid(row=5, column=0, sticky='w', pady=2)
     lbl_Last = tkinter.Label(second_frame, text="Last", bg='orange')

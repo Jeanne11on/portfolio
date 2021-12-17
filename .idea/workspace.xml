@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="550f7615-5697-47fa-9275-882a5ba53eba" name="Changes" comment="renamed combine.py to front_end.py, added some rows for input">
+    <list default="true" id="550f7615-5697-47fa-9275-882a5ba53eba" name="Changes" comment="last update 3.50">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front_end.py" beforeDir="false" afterPath="$PROJECT_DIR$/front_end.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stocks.csv" beforeDir="false" afterPath="$PROJECT_DIR$/stocks.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_backend.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_backend.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +66,7 @@
       <workItem from="1639743895189" duration="1306000" />
       <workItem from="1639749468849" duration="68000" />
       <workItem from="1639749541172" duration="75000" />
-      <workItem from="1639749640153" duration="2856000" />
+      <workItem from="1639749640153" duration="3602000" />
     </task>
     <task id="LOCAL-00001" summary="renamed combine.py to front_end.py, added some rows for input">
       <created>1639677239820</created>
@@ -82,7 +82,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639679227777</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="last update 3.50">
+      <created>1639752646175</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1639752646175</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -103,6 +110,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="renamed combine.py to front_end.py, added some rows for input" />
-    <option name="LAST_COMMIT_MESSAGE" value="renamed combine.py to front_end.py, added some rows for input" />
+    <MESSAGE value="last update 3.50" />
+    <option name="LAST_COMMIT_MESSAGE" value="last update 3.50" />
   </component>
 </project>

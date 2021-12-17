@@ -5,7 +5,6 @@ import csv
 import os
 import mplfinance as mpf
 
-
 #the function show whether the csv file given as argument is empty or not (true = empty, false = not empty)
 def is_empty_csv(file):
     with open(file) as csvfile:
@@ -25,6 +24,10 @@ def create_database():
      writer.writerow(["ticker", "volume","Date of Purchase","Average price"])
    else:
       return
+
+def show_total_shares():
+    pass
+
 
 #this function allows the user to add new stocks to the database and add or remove a certain 
 #amount of volume of a stock
