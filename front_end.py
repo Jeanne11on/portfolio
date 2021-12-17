@@ -8,9 +8,10 @@ from tkinter import *
 from tkinter import ttk
 import pandas as pd
 from matplotlib import pyplot as plt
-import matplotlib  
+import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import csv
 
 # create classes
 class Investment(object):
@@ -19,6 +20,14 @@ class Investment(object):
         self.volume = volume
         self.Date_of_purchase = Date_of_purchase
         self.avg_price = avg_price
+
+def GetCurrentValue(ticker):
+    ticker_yahoo = yf.Ticker(ticker)
+    data = ticker_yahoo.history()
+    return(data.tail(1)['Close'].iloc[0])
+
+def initialize_db():
+    mb.create_database()
 
 # we populate the start tab
 def start_tab_widgets():
@@ -29,13 +38,11 @@ def start_tab_widgets():
     # start_tab functionalities
     lbl_lucky = tkinter.ttk.Label(first_frame,
                                   text='Place your orders below, your portfolio will be generated after you fill in your orders, and click Generate my portfolio')
-    lbl_lucky.grid(column=0, row=1, padx=10, sticky=(tkinter.W))
+    lbl_lucky.grid(column=0, row=1, padx=10, sticky=(tkinter.W),columnspan=2)
     lbl_insert_stickers = tkinter.ttk.Label(first_frame,text='Insert tickers in this column')
     lbl_insert_stickers.grid(column=0,row=2,pady=10, padx=10, sticky=(tkinter.W))
     lbl_how_many_shares = tkinter.ttk.Label(first_frame,text='How many shares do you want?')
     lbl_how_many_shares.grid(column=1,row=2,pady=10, padx=10, sticky=(tkinter.W))
-    lbl_market_value = tkinter.ttk.Label(first_frame,text='Current market value...')
-    lbl_market_value.grid(column=3,row=2,pady=10, padx=10, sticky=(tkinter.W))
 
     E1_tickers = tkinter.ttk.Entry(first_frame)
     E1_tickers.grid(column=0,row=10,pady=10, padx=10, sticky=(tkinter.W))
@@ -69,17 +76,35 @@ def start_tab_widgets():
         return todays_data['Close'][0]
 
     def generate_porfolio():
-        #this function aggregates both the ticker and the number of shares, as of now it's printed, but wont be in the final result
-        investment1=E1_tickers.get()+','+E1_nb_of_shares.get()+','+stamp
-        investment2=E2_tickers.get()+','+E2_nb_of_shares.get()+','+stamp
-        investment3=E3_tickers.get()+','+E3_nb_of_shares.get()+','+stamp
-        investment4=E4_tickers.get()+','+E4_nb_of_shares.get()+','+stamp
-        investment5=E5_tickers.get()+','+E5_nb_of_shares.get()+','+stamp
-        return(str(investment1+investment2+investment3+investment4+investment5))
-        mb.create_database()
-        #lbl_userinput = tkinter.ttk.Label(first_frame,text=userinput) #dont forget to delete this
-        #lbl_userinput.grid(column=1,row=98,pady=10, padx=10, sticky=(tkinter.W)) #dont forget to delete this
+        # this function aggregates both the ticker and the number of shares, as of now it's printed, but wont be in the final result
+        investment1 = list(E1_tickers.get() + ',' + E1_nb_of_shares.get() + ',' + stamp + str(GetCurrentValue(ticker=E1_tickers.get())))
+        investment2 = list(E2_tickers.get() + ',' + E2_nb_of_shares.get() + ',' + stamp + str(GetCurrentValue(ticker=E2_tickers.get())))
+        investment3 = list(E3_tickers.get() + ',' + E3_nb_of_shares.get() + ',' + stamp + str(GetCurrentValue(ticker=E3_tickers.get())))
+        investment4 = list(E4_tickers.get() + ',' + E4_nb_of_shares.get() + ',' + stamp + str(GetCurrentValue(ticker=E4_tickers.get())))
+        investment5 = list(E5_tickers.get() + ',' + E5_nb_of_shares.get() + ',' + stamp + str(GetCurrentValue(ticker=E5_tickers.get())))
+        initialize_db()
+        mb.update_data(E1_tickers.get(), E1_nb_of_shares.get(), stamp, GetCurrentValue(ticker=E1_tickers.get()))
+        mb.update_data(E2_tickers.get(), E2_nb_of_shares.get(), stamp, GetCurrentValue(ticker=E2_tickers.get()))
+        mb.update_data(E3_tickers.get(), E3_nb_of_shares.get(), stamp, GetCurrentValue(ticker=E3_tickers.get()))
+        mb.update_data(E4_tickers.get(), E4_nb_of_shares.get(), stamp, GetCurrentValue(ticker=E4_tickers.get()))
+        mb.update_data(E5_tickers.get(), E5_nb_of_shares.get(), stamp, GetCurrentValue(ticker=E5_tickers.get()))
 
+        # Now that the data is in excel, we load it into the front page
+        tv_data = tkinter.ttk.Treeview(first_frame, columns=('ticker', 'volume', 'Date of Purchase', 'Average price'),show='headings')
+        tv_data.heading('ticker', text='ticker')
+        tv_data.heading('volume', text='volume')
+        tv_data.heading('Date of Purchase', text='Date of Purchase')
+        tv_data.heading('Average price', text='Average price')
+        tv_data.grid(row=20, column=0, pady=10, padx=10, sticky=(tkinter.W),columnspan=2)
+
+        with open('stocks.csv') as f:
+            reader = csv.DictReader(f, delimiter=',')
+            for row in reader:
+                ticker = row['ticker']
+                volume = row['volume']
+                Date = row['Date of Purchase']
+                price = row['Average price']
+                tv_data.insert("", 1, values=(ticker, volume, Date, price))
 
     #we create a button to output user input
     Btn_ticker_value=tkinter.ttk.Button(first_frame,text='Generate my portfolio',command=generate_porfolio)
@@ -99,9 +124,6 @@ def start_tab_widgets():
     Investment4=Investment(E4_tickers.get(),E4_nb_of_shares.get(),stamp,get_current_price(E4_tickers))
     Investment5=Investment(E5_tickers.get(),E5_nb_of_shares.get(),stamp,get_current_price(E5_tickers))
 '''
-def initialize_db():
-    mb.create_database()
-
 def portfolio_widgets():
     # Create the label for the frame
     second_window_label = tkinter.ttk.Label(second_frame, text='Portfolio')
@@ -112,7 +134,7 @@ def portfolio_widgets():
     second_window_back_button.grid(column=0, row=10, pady=10, sticky=(tkinter.W))
     second_window_next_button = tkinter.Button(second_frame, text = "Next", command = call_third_frame_on_top)
     second_window_next_button.grid(column=1, row=10, pady=10, sticky=(tkinter.W))
-    
+
     #insert porfolio functionalities here
     #first we populate with the portfolio
     lbl_Portfolios_title = tkinter.Label(second_frame, text="Portfolios", bg='orange')
@@ -152,6 +174,7 @@ def reco_widgets():
     # Create the label for the frame
     third_window_label = tkinter.ttk.Label(third_frame, text='Recommendation tab')
     third_window_label.grid(column=0, row=0, pady=10, padx=10, sticky=(tkinter.N))
+
     tree = ttk.Treeview(third_frame, column=("Ticker", "Recommendation"), show='headings', height=5)
     tree.column("# 1", anchor=CENTER)
     tree.heading("# 1", text="Ticker")
@@ -165,6 +188,7 @@ def reco_widgets():
         tree.insert('', 'end', text="1", values=(data.ticker[i], mb.recommendations_stock(data.ticker[i])))
         i =+1
     tree.grid()
+
     # Create the button for the frame
     third_window_back_button = tkinter.Button(third_frame, text = "Back", command = call_second_frame_on_top)
     third_window_back_button.grid(column=1, row=2, pady=10, sticky=(tkinter.N))
@@ -173,7 +197,7 @@ def reco_widgets():
     #plot_button = tkinter.Button(third_frame, text = "Plot")
     #plot_button.grid(column=1, row=0, pady=10, sticky=(tkinter.N))
 
-    
+
 def call_first_frame_on_top():
     # This function can be called only from the second window.
     # Hide the second window and show the first window.
@@ -213,7 +237,7 @@ def pie_chart():
     pie = plt.pie(values, labels=labels, explode=explode, shadow=True, autopct='%1.1f%%')
     plt.legend(pie[0], labels, loc="upper right")
     canvas = FigureCanvasTkAgg(actualFigure, master = second_frame)
-    canvas.get_tk_widget().grid()
+    canvas.get_tk_widget().grid(column=0, row=0, padx=20, pady=5, sticky=(tkinter.W, tkinter.N, tkinter.E))
     #canvas.show()
 
 def quit_program():
@@ -253,8 +277,6 @@ start_tab_widgets()
 # Hide all frames in reverse order, but leave first frame visible (unhidden).
 third_frame.grid_forget()
 second_frame.grid_forget()
-
-pie_chart()
 
 # Start tkinter event - loop
 root_window.mainloop()

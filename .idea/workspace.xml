@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="550f7615-5697-47fa-9275-882a5ba53eba" name="Changes" comment="renamed combine.py to front_end.py, added some rows for input" />
+    <list default="true" id="550f7615-5697-47fa-9275-882a5ba53eba" name="Changes" comment="renamed combine.py to front_end.py, added some rows for input">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front_end.py" beforeDir="false" afterPath="$PROJECT_DIR$/front_end.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stocks.csv" beforeDir="false" afterPath="$PROJECT_DIR$/stocks.csv" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,6 +20,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -55,7 +60,13 @@
       <workItem from="1638821290354" duration="16000" />
       <workItem from="1639658958728" duration="16565000" />
       <workItem from="1639681076677" duration="996000" />
-      <workItem from="1639682320292" duration="14805000" />
+      <workItem from="1639682320292" duration="14994000" />
+      <workItem from="1639742548247" duration="305000" />
+      <workItem from="1639743514622" duration="308000" />
+      <workItem from="1639743895189" duration="1306000" />
+      <workItem from="1639749468849" duration="68000" />
+      <workItem from="1639749541172" duration="75000" />
+      <workItem from="1639749640153" duration="2856000" />
     </task>
     <task id="LOCAL-00001" summary="renamed combine.py to front_end.py, added some rows for input">
       <created>1639677239820</created>
